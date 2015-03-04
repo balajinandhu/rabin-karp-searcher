@@ -58,8 +58,8 @@ namespace RabinKarpSearcher
             // Read haystack
             Console.Write("Enter haystack: ");
             var haystack = Console.ReadLine();
-
-            var searcher = new RabinKarpSearcher<char>(6, new ASCIIHashFunction(101, 6));
+            uint length = uint.Parse(needleLength.ToString()); 
+            var searcher = new RabinKarpSearcher<char>(length, new ASCIIHashFunction(101, length));
             searcher.AddNeedles(needles.Select(n => n.ToCharArray()));
 
             var result = searcher.Search(haystack.ToList());
@@ -68,12 +68,13 @@ namespace RabinKarpSearcher
                 Console.WriteLine("Found {0} {1} in haystack:", result.Count, result.Count == 1 ? "needle" : "needles");
 
                 foreach (int pos in result)
-                    Console.WriteLine("{0}\t{1}", pos, haystack.Substring(pos, 6));
+                    Console.WriteLine("{0}\t{1}", pos, haystack.Substring(pos, needleLength));
             }
             else
             {
                 Console.WriteLine("There are no needles in the haystack.");
             }
+            Console.ReadKey();
         }
 
         private static void TestNeedleStorage(List<string> needles, int needleLength)
